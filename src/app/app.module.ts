@@ -11,6 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { ErrorpageComponent } from './pages/errorpage/errorpage.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './interceptor/http-inteceptor.interceptor';
+import { ApiRateLimitInterceptor } from './interceptor/api-rate-limit.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,12 @@ import { ApiInterceptor } from './interceptor/http-inteceptor.interceptor';
       useClass: ApiInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiRateLimitInterceptor,
+      multi: true,
+    },
+    
   ],
   bootstrap: [AppComponent],
 })
